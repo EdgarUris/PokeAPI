@@ -29,5 +29,21 @@ public class PokemonController {
         return pokemonService.crear(pokemon);
     }
 
+    @PutMapping("/{id}")
+    public Pokemon actualizarCompleto(@PathVariable Long id, @RequestBody Pokemon pokemon) {
+        return pokemonService.actualizarPokemonCompleto(id, pokemon);
+    }
+
+    @PatchMapping("/{id}")
+    public Pokemon actualizarParcial(@PathVariable Long id, @RequestBody Pokemon pokemon) {
+        return pokemonService.actualizarPokemonParcial(id, pokemon);
+    }
+
+    // Eliminar un pokemon por id
+    @DeleteMapping("/{id}")
+    public void eliminarPokemon(@PathVariable Long id) {
+        pokemonService.eliminarPokemon(id);
+    }
+
 
 }
