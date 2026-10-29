@@ -1,5 +1,7 @@
 package com.example.PokemonAPI.service;
 
+import com.example.PokemonAPI.exception.BusinessRulesException;
+import com.example.PokemonAPI.exception.ResourceNotFoundException;
 import com.example.PokemonAPI.model.Pokemon;
 import com.example.PokemonAPI.repository.PokemonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ public class PokemonService {
     }
 
     public Pokemon obtenerPorId(Long id){
-        return pokemonRepository.findById(id).orElse(null);
+        return pokemonRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("El pokemon no existe"));
     }
 
     public Pokemon crear(Pokemon pokemon){
@@ -40,7 +42,7 @@ public class PokemonService {
             pokemon.setDescripcion(pokemonActualizado.getDescripcion());
             pokemon.setImagen_url(pokemonActualizado.getImagen_url());
             return pokemonRepository.save(pokemon);
-        }).orElse(null);
+        }).orElseThrow(() -> new BusinessRulesException("Error en el formato del nuevo pokemon"));
     }
 
     // PATCH permite modificar solamente algunos campos del recurso.
@@ -57,7 +59,7 @@ public class PokemonService {
             if (pokemonParcial.getImagen_url() != null) pokemon.setImagen_url(pokemonParcial.getImagen_url());
 
             return pokemonRepository.save(pokemon);
-        }).orElse(null);
+        }).orElseThrow(() -> new BusinessRulesException("Error en el formato del nuevo pokemon"));
     }
 
     public void eliminarPokemon(Long id) {

@@ -2,6 +2,7 @@ package com.example.PokemonAPI.controller;
 
 import com.example.PokemonAPI.model.Pokemon;
 import com.example.PokemonAPI.service.PokemonService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,8 @@ public class PokemonController {
     }
 
     @PostMapping
-    public Pokemon crear(@RequestBody Pokemon pokemon){
+    //@Valid permite utilizar las notaciones de validación al procesar la petición post/put/patch
+    public Pokemon crear(@Valid @RequestBody Pokemon pokemon){
         return pokemonService.crear(pokemon);
     }
 
